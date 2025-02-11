@@ -1,0 +1,4 @@
+streamlit
+aiohttp
+nest_asyncio
+json5
