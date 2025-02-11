@@ -89,14 +89,17 @@ async def generate_search_queries_async(session, user_query):
             return []
     return []
 
-async def perform_search_async(session, query):
+# Modify perform_search_async function
+async def perform_search_async(session, query, result_limit=5):
     """
     Make an asynchronous SERPAPI call to perform a Google search for the provided query.
+    result_limit: Maximum number of search results to return
     """
     params = {
         "q": query,
         "api_key": SERPAPI_API_KEY,
-        "engine": "google"
+        "engine": "google",
+        "num": result_limit  # Add this parameter for limiting results
     }
     try:
         async with session.get(SERPAPI_URL, params=params) as resp:
@@ -104,7 +107,7 @@ async def perform_search_async(session, query):
                 results = await resp.json()
                 if "organic_results" in results:
                     links = [item.get("link") for item in results["organic_results"] if "link" in item]
-                    return links
+                    return links[:result_limit]  # Ensure we don't exceed the limit
                 else:
                     print("No organic results found in SERPAPI response.")
                     return []
@@ -274,9 +277,11 @@ async def process_link(session, link, user_query, search_query):
             return SourcedContext(context, link)
     return None
 
-async def research_flow(user_query, iteration_limit):
+# Modify research_flow function to accept search_limit parameter
+async def research_flow(user_query, iteration_limit, search_limit=5):
     """
     Primary research procedure intended for integration with Streamlit.
+    search_limit: Maximum number of search results per query
     """
     sourced_contexts = []   
     all_search_queries = []  
@@ -292,8 +297,10 @@ async def research_flow(user_query, iteration_limit):
             print(f"\n--- Iteration {iteration + 1} ---")
             iteration_contexts = []
 
-            search_tasks = [perform_search_async(session, query) for query in new_search_queries]
+            # Update to include search_limit
+            search_tasks = [perform_search_async(session, query, search_limit) for query in new_search_queries]
             search_results = await asyncio.gather(*search_tasks)
+
 
             unique_links = {}
             for idx, links in enumerate(search_results):
