@@ -2,11 +2,13 @@
 
 <p align="center">
     <img src="logo.png" width="200" alt="Open DeepResearch Logo">
+    <br>
+    <a href="https://huggingface.co/spaces/AlignAI/Open-Deep-Research">Try the app on Hugging Face Spaces</a>
 </p>
 
 ## Overview
 
-Open DeepResearch is a powerful research assistant that leverages AI to conduct comprehensive research on any topic. It automates the process of gathering, analyzing, and synthesizing information from multiple sources to generate detailed reports with proper citations.
+Open DeepResearch is an application for assisting in research by conducting comprehensive research on any topic.  It automates the process of gathering, analyzing, and synthesizing information from multiple sources to generate detailed reports with proper citations.
 
 ## Features
 
