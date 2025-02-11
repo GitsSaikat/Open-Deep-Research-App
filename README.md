@@ -1,7 +1,7 @@
 # 🔍 Open DeepResearch
 
 <p align="center">
-    <img src="logo.png" width="100" alt="Open DeepResearch Logo">
+    <img src="logo.png" width="200" alt="Open DeepResearch Logo">
 </p>
 
 ## Overview
